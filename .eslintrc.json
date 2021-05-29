@@ -1,0 +1,47 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true,
+        "node": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb"
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "indent": "off",
+        "spaced-comment": [
+            "error",
+            "always",
+            {
+                "markers": [
+                    "/"
+                ]
+            }
+        ],
+        "operator-linebreak": [
+            2,
+            "after",
+            {
+                "overrides": {
+                    "?": "before"
+                }
+            }
+        ],
+        "no-console": "off",
+        "no-shadow": "off",
+        "camelcase": "off",
+        "consistent-return": "off",
+        "no-underscore-dangle": "off"
+    }
+}
