@@ -10,11 +10,11 @@ const UserSchema = new Schema({
     nationality: String,
     gender: { type: String, enum: ['Male', 'Female', 'Other'] },
     blood_group: { type: String, enum: ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'] },
-    nid_number: { type: String, required: true },
-    passport_number: String,
+    nid_number: { type: String, unique: true, required: true },
+    passport_number: { type: String, unique: true },
     email: { type: String, unique: true, required: true },
     encryptedPassword: { type: String, required: true },
-    role: { type: String, enum: ['admin', 'investor'], required: true },
+    role: { type: String, enum: ['admin', 'moderator', 'investor'], required: true },
 });
 
 const User = model('User', UserSchema);
