@@ -11,7 +11,7 @@ const UserSchema = new Schema({
     gender: { type: String, enum: ['Male', 'Female', 'Other'] },
     blood_group: { type: String, enum: ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'] },
     nid_number: { type: String, unique: true, required: true },
-    passport_number: { type: String, unique: true },
+    passport_number: String,
     email: { type: String, unique: true, required: true },
     encryptedPassword: { type: String, required: true },
     role: { type: String, enum: ['admin', 'moderator', 'investor'], required: true },
