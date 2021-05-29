@@ -1,6 +1,9 @@
 const bcrypt = require('bcrypt');
 const { User } = require('../../models/user');
 
+// is admin
+const canModifyAdmin = ({ currentAdmin }) => currentAdmin && currentAdmin.role === 'admin';
+
 // resource options
 const options = {
     properties: {
@@ -25,6 +28,26 @@ const options = {
                     };
                 }
                 return request;
+            },
+            isAccessible: canModifyAdmin,
+        },
+        edit: { isAccessible: canModifyAdmin },
+        delete: { isAccessible: canModifyAdmin },
+        list: {
+            before: async (request, context) => {
+                const { currentAdmin } = context;
+                const filter = currentAdmin.role === 'admin' ? {
+                    ...request.query,
+                } : {
+                    ...request.query,
+                    'filters.email': currentAdmin.email,
+                };
+                return {
+                    ...request,
+                    query: {
+                        ...filter,
+                    },
+                };
             },
         },
     },
