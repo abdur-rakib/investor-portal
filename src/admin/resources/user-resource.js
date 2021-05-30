@@ -1,5 +1,5 @@
-const bcrypt = require('bcrypt');
 const { User } = require('../../models/user');
+const { before: passwordBeforeHook } = require('../actions/password.hook');
 
 // is admin
 const canModifyAdmin = ({ currentAdmin }) => currentAdmin && currentAdmin.role === 'admin';
@@ -19,20 +19,12 @@ const options = {
     },
     actions: {
         new: {
-            before: async (request) => {
-                if (request.payload.password) {
-                    request.payload = {
-                        ...request.payload,
-                        encryptedPassword: await bcrypt.hash(request.payload.password, 10),
-                        password: undefined,
-                    };
-                }
-                return request;
-            },
+            before: async (request) => passwordBeforeHook(request),
             isAccessible: canModifyAdmin,
         },
         edit: { isAccessible: canModifyAdmin },
         delete: { isAccessible: canModifyAdmin },
+        bulkDelete: { isAccessible: canModifyAdmin },
         list: {
             before: async (request, context) => {
                 const { currentAdmin } = context;
